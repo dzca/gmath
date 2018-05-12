@@ -1,24 +1,5 @@
 <template>
   <div id="app" class="layout">
-    <!--
-    <p>
-      <router-link to="/">Home</router-link>
-      <router-link to="/settings">Settings</router-link>
-      <router-link to="/questions">Questions</router-link>
-    </p>
-
-    <Layout>
-        <Header>Header</Header>
-        <Content></Content>
-        <Footer>Footer</Footer>
-    </Layout>
-
-    <Row>
-    <Col span="8"><br></Col>
-    <Col span="8"></Col>
-    <Col span="8"><br></Col>
-    </Row>
-    -->
     <el-row :gutter="20">
       <el-col :span="2"><br></el-col>
       <el-col :span="20"><router-view/></el-col>
