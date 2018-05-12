@@ -1,0 +1,14 @@
+[Unit]
+Description=gmath app
+
+[Service]
+ExecStart=/usr/bin/node gmath.5001.js
+Restart=always
+User=dustin
+Group=dustin
+Environment=PATH=/usr/bin:/usr/local/bin
+Environment=NODE_ENV=production
+WorkingDirectory=/app/gmath
+
+[Install]
+WantedBy=multi-user.target

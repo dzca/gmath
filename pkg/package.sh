@@ -37,7 +37,7 @@ fi
 
 
 # remove gmath-pkg.tar.gz if there is any
-if [ ! -e "../$APP_NAME-pkg.tar.gz" ]
+if [ -e "../$APP_NAME-pkg.tar.gz" ]
 then
   rm -f ../$APP_NAME-pkg.tar.gz
 fi
@@ -45,7 +45,6 @@ fi
 
 _make_dir $PKG_ROOT
 
-cp -v deploy.sh $PKG_ROOT/
 cp -v gmath.service $PKG_ROOT/
 cp -v gmath.5001.js $PKG_ROOT/
 cp -v config.js $PKG_ROOT/
