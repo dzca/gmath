@@ -20,11 +20,11 @@ app.use(bodyParser.urlencoded({
 
 app.use(cookieParser());
 app.use(favicon(__dirname + '/favicon.ico'));
-app.use(express.static(__dirname + '/app'));
+app.use(express.static(__dirname + '/dist'));
 
 app.get('*', function(req, res) {
   res.sendFile('index.html', {
-    root: path.resolve(__dirname + '/app')
+    root: path.resolve(__dirname + '/dist')
   });
 });
 
