@@ -29,7 +29,13 @@ _make_dir()
 ################################################
 
 # clean stage folder
-rm -rv $PKG_ROOT
+if [ -d $PKG_ROOT ]
+then
+    echo "delete $PKG_ROOT"
+    rm -rv $PKG_ROOT
+fi
+
+
 # remove gmath-pkg.tar.gz if there is any
 if [ ! -e "../$APP_NAME-pkg.tar.gz" ]
 then
