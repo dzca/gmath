@@ -13,6 +13,8 @@ SYSTEMD_ROOT=/etc/systemd/system
 
 pushd $APP_ROOT
 # install node application
+
+echo 'hello' >> install.log 
 npm install
 
 # install systemd configuration
