@@ -1,25 +1,31 @@
 <template>
-<div class='question_area'>
+<div class="question_area">
 
 	<el-button type="primary" @click="pdfQuestion()" round> Questions PDF </el-button>
 	<el-button type="primary" @click="pdfAnswer()" round> Answer PDF </el-button>
 
-	<h2>{{ question_title }}</h2>
+	<div id="questions">
+		<h2>{{ question_title }}</h2>
 
-	<el-row>
-	  <el-col v-for="(item, index) in questions" :key="index" :span="8"><div class="question">
-{{ index + 1 }}. {{ item.l }} <span v-html="item.o"></span> {{ item.r }} =
-		</div></el-col>
-	</el-row>
+		<el-row>
+		  <el-col v-for="(item, index) in questions" :key="index" :span="8">
+				<div class="question">
+					({{ index + 1 }})  {{ item.l }} <span v-html="item.o"></span> {{ item.r }} =
+				</div>
+			</el-col>
+		</el-row>
+	</div>
 
-
-	<h2>{{ answer_title }}</h2>
-	<el-row>
-		<el-col v-for="(item, index) in questions" :key="index" :span="8"><div class="answer">
-{{ index + 1 }}. {{ item.v }}
-		</div></el-col>
-	</el-row>
-
+	<div id="answers">
+		<h2>{{ answer_title }}</h2>
+		<el-row>
+			<el-col v-for="(item, index) in questions" :key="index" :span="8">
+				<div class="answer">
+					({{ index + 1 }})  {{ item.v }}
+				</div>
+			</el-col>
+		</el-row>
+	</div>
 </div>
 </template>
 
@@ -90,13 +96,87 @@ export default {
     ...mapGetters(["settings"])
   },
   methods: {
+    // Paper size
+    // A4:	210 × 297mm	8.3 × 11.7inch
+    // letter: 216 × 279mm 8 1⁄2 × 11	inch
     pdfQuestion() {
+      // console.log("question pdf called");
       let doc = new jsPDF();
 
-      doc.text("Hello world!", 10, 10);
-      doc.save("a4.pdf");
+      let list = _.map(this.questions, function(item, index) {
+        return "(" + (index + 1) + ")  " + item.l + item.o + item.r + "=";
+      });
+
+      // compute three columns
+      let column1 = this.getColumn(list, 0);
+
+      // add an empty line
+      column1 = this.addSpaceLine(column1);
+      let column2 = this.getColumn(list, 1);
+      column2 = this.addSpaceLine(column2);
+      let column3 = this.getColumn(list, 2);
+      column3 = this.addSpaceLine(column3);
+
+      // compute the pages - 40 columns per page
+      while (column1.length > 0) {
+        let c1 = column1.splice(0, 39);
+        let c2 = column2.splice(0, 39);
+        let c3 = column3.splice(0, 39);
+        doc.text(c1, 10, 30);
+        doc.text(c2, 80, 30);
+        doc.text(c3, 150, 30);
+        if (column1.length > 0) {
+          doc.addPage();
+        }
+      }
+
+      doc.save("questions.pdf");
     },
-    pdfAnswer() {}
+    getColumn(list, modulo) {
+      return _.filter(list, function(item, index) {
+        return index % 3 == modulo;
+      });
+    },
+    addSpaceLine(list) {
+      let line = [];
+      list.forEach(x => {
+        line.push(x);
+        line.push(" ");
+      });
+      return line;
+    },
+    pdfAnswer() {
+      let doc = new jsPDF();
+
+      let list = _.map(this.questions, function(item, index) {
+        return "(" + (index + 1) + ")  " + item.v;
+      });
+
+      // compute three columns
+      let column1 = this.getColumn(list, 0);
+
+      // add an empty line
+      column1 = this.addSpaceLine(column1);
+      let column2 = this.getColumn(list, 1);
+      column2 = this.addSpaceLine(column2);
+      let column3 = this.getColumn(list, 2);
+      column3 = this.addSpaceLine(column3);
+
+      // compute the pages - 40 columns per page
+      while (column1.length > 0) {
+        let c1 = column1.splice(0, 39);
+        let c2 = column2.splice(0, 39);
+        let c3 = column3.splice(0, 39);
+        doc.text(c1, 10, 30);
+        doc.text(c2, 80, 30);
+        doc.text(c3, 150, 30);
+        if (column1.length > 0) {
+          doc.addPage();
+        }
+      }
+
+      doc.save("answer.pdf");
+    }
   }
 };
 </script>

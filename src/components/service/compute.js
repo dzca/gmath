@@ -65,7 +65,7 @@ const compute = {
         l: item.v,
         r: item.r,
         v: item.l,
-        o: '&divide;'
+        o: '/' // &divide;
       }
     });
     // remove any case that right operand is 0
