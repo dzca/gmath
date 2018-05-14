@@ -1,10 +1,19 @@
 # gmath
 
-> vue.js app generate math questions
+> a java script application generate math questions for kids
 
-## Build Setup
+This single page application is running on browser. The feature includes:
+- random generate +,-,x,/ math questions.
+- write the questions and answers into pdf
 
-``` bash
+The features in this project
+- vuex to manage question settings between pages.
+- jspdf to print questions in pdf format
+- jest unit test
+
+### Build Setup
+
+```
 # install dependencies
 npm install
 
@@ -24,6 +33,6 @@ npm run unit
 npm test
 ```
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
-
-npm install sass-loader node-sass style-loader --save-dev
+### tags and branches
+- master running as a SPA in nginx
+- v1.0.0 running as a node application

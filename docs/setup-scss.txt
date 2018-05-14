@@ -1,0 +1,21 @@
+
+## install scss modules
+
+```
+npm install sass-loader node-sass style-loader --save-dev
+```
+
+## add scss rules in webpack.base.conf.js
+```
+module: {
+  rules: [
+    {
+      test: /\.vue$/,
+      loader: 'vue-loader',
+      options: vueLoaderConfig
+    },
+    {
+      test: /\.s[a|c]ss$/,
+      loader: 'style!css!sass'
+    },
+```
